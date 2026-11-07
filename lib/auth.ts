@@ -30,14 +30,15 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  user: {
-    additionalFields: {
-      role: {
-        type: ["seeker", "recruiter", "admin"],
-        input: false,
-      },
+user: {
+  additionalFields: {
+    role: {
+      type: "string",
+      required: true,
+      input: true,
     },
   },
+},
 
   ...(googleClientId && googleClientSecret
     ? {

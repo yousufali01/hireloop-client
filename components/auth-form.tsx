@@ -29,6 +29,7 @@ export interface AuthFormData {
   confirmPassword?: string
   termsAccepted?: boolean
   rememberMe?: boolean
+  role?: "seeker" | "recruiter"
 }
 
 // Props Type
@@ -62,6 +63,7 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
       confirmPassword: formData.get("confirmPassword")?.toString(),
       termsAccepted,
       rememberMe,
+      role: formData.get("role")?.toString() as "seeker" | "recruiter",
     }
 
     // Password Validation
@@ -215,6 +217,24 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
                           required
                         />
                       </div>
+                    </div>
+                  )}
+
+                  {/* Role */}
+                  {isSignUp && (
+                    <div className="space-y-2">
+                      <Label htmlFor="role">Select your role</Label>
+
+                      <select
+                        id="role"
+                        name="role"
+                        defaultValue="seeker"
+                        required
+                        className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
+                      >
+                        <option value="seeker">Job Seeker</option>
+                        <option value="recruiter">Recruiter</option>
+                      </select>
                     </div>
                   )}
 

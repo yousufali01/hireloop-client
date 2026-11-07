@@ -1,3 +1,4 @@
+
 "use client"
 
 import AuthForm, { type AuthFormData } from "@/components/auth-form"
@@ -10,6 +11,11 @@ export default function SignUpPage() {
       email: data.email,
       password: data.password,
       callbackURL: "/",
+      fetchOptions: {
+        body: {
+          role: data.role || "seeker",
+        },
+      },
     })
 
     if (error) {
