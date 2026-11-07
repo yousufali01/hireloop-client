@@ -16,5 +16,5 @@ export default function SignInPage() {
     }
   }
 
-  return <AuthForm type="signin" onSubmit={handleSignIn} />
+  return <AuthForm type="sign-in" onSubmit={handleSignIn} />
 }

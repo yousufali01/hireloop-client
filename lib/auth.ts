@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth"
 import { MongoClient } from "mongodb"
 import { mongodbAdapter } from "@better-auth/mongo-adapter"
+import { role } from "better-auth/plugins"
 
 const mongoUri = process.env.BETTER_AUTH_DB_URI
 const authSecret = process.env.BETTER_AUTH_SECRET
@@ -28,6 +29,14 @@ export const auth = betterAuth({
 
   emailAndPassword: {
     enabled: true,
+  },
+  user: {
+    additionalFields: {
+      role: {
+        type: ["seeker", "recruiter", "admin"],
+        input: false,
+      },
+    },
   },
 
   ...(googleClientId && googleClientSecret
