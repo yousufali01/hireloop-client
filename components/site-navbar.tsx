@@ -104,7 +104,7 @@ export function SiteNavbar() {
               variant="ghost"
               nativeButton={false}
               className="h-9 px-4 text-[17px] font-semibold text-[#645bff] hover:bg-[#645bff]/10 hover:text-[#7a71ff]"
-              render={<Link href="/signin" />}
+              render={<Link href="/sign-in" />}
             >
               Sign In
             </Button>
@@ -175,7 +175,7 @@ export function SiteNavbar() {
               variant="ghost"
               nativeButton={false}
               className="h-10 w-full justify-center text-[17px] font-semibold text-[#645bff] hover:bg-[#645bff]/10 hover:text-[#7a71ff]"
-              render={<Link href="/signin" />}
+              render={<Link href="/sign-in" />}
             >
               Sign In
             </Button>

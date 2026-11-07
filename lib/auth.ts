@@ -1,22 +1,43 @@
 import { betterAuth } from "better-auth"
 import { MongoClient } from "mongodb"
 import { mongodbAdapter } from "@better-auth/mongo-adapter"
-const client = new MongoClient("mongodb://localhost:27017/database")
-const db = client.db("hireloopdb")
+
+const mongoUri = process.env.BETTER_AUTH_DB_URI
+const authSecret = process.env.BETTER_AUTH_SECRET
+
+if (!mongoUri) {
+  throw new Error("BETTER_AUTH_DB_URI is missing in .env")
+}
+
+if (!authSecret) {
+  throw new Error("BETTER_AUTH_SECRET is missing in .env")
+}
+
+const client = new MongoClient(mongoUri)
+const db = client.db("hireloop") // Use the database name you want for your app
+
+const googleClientId = process.env.GOOGLE_CLIENT_ID
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET
 
 export const auth = betterAuth({
-  //..
-  
+  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+
+  secret: authSecret,
+
+  database: mongodbAdapter(db),
+
   emailAndPassword: {
     enabled: true,
   },
-  socialProviders: {
-    google: {
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    },
-  },
-  database: mongodbAdapter(db, {
-    client,
-  }),
+
+  ...(googleClientId && googleClientSecret
+    ? {
+        socialProviders: {
+          google: {
+            clientId: googleClientId,
+            clientSecret: googleClientSecret,
+          },
+        },
+      }
+    : {}),
 })
