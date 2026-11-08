@@ -30,15 +30,28 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-user: {
-  additionalFields: {
-    role: {
-      type: "string",
-      required: true,
-      input: true,
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        required: true,
+        input: true,
+      },
+      // Editable profile fields (see update-user endpoint)
+      phone: {
+        type: "string",
+        required: false,
+        input: true,
+        defaultValue: "",
+      },
+      address: {
+        type: "string",
+        required: false,
+        input: true,
+        defaultValue: "",
+      },
     },
   },
-},
 
   ...(googleClientId && googleClientSecret
     ? {

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { SiteNavbar } from "@/components/site-navbar"
+import { AppToastProvider } from "@/components/toast-provider"
 import { cn } from "@/lib/utils";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'})
@@ -25,8 +26,10 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider defaultTheme="dark">
-          <SiteNavbar />
-          {children}
+          <AppToastProvider>
+            <SiteNavbar />
+            {children}
+          </AppToastProvider>
         </ThemeProvider>
       </body>
     </html>

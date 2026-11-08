@@ -68,6 +68,18 @@ export default function HeroSection() {
           sizes="100vw"
           className="object-cover object-center"
         />
+
+        {/* Dark scrim so white content stays readable */}
+        <div className="absolute inset-0 bg-[#07060b]/60" />
+
+        {/* Blend the top edge into the navbar and page background */}
+        <div className="absolute inset-x-0 top-0 h-[45%] bg-gradient-to-b from-[#030304] via-[#030304]/55 to-transparent" />
+
+        {/* Blend the bottom edge into the statistics section */}
+        <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-[#030304] via-[#030304]/80 to-transparent" />
+
+        {/* Soft side vignette */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_55%,transparent_40%,rgba(3,3,4,0.75)_100%)]" />
       </div>
 
       {/* HERO CONTENT */}

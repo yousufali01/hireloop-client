@@ -1,10 +1,13 @@
 "use client"
 
 import React, { useState } from "react"
+import Image from "next/image"
 import Link from "next/link"
 
 import {
   ArrowRight,
+  Building2,
+  Check,
   Eye,
   EyeOff,
   LockKeyhole,
@@ -19,7 +22,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Card, CardContent } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
 
 // Form Data Type
 export interface AuthFormData {
@@ -29,13 +31,30 @@ export interface AuthFormData {
   confirmPassword?: string
   termsAccepted?: boolean
   rememberMe?: boolean
-  role?: "seeker" | "recruiter"
+  role?: "seeker" | "recruiter" | "admin"
 }
 
 // Props Type
 interface AuthFormProps {
   type: "sign-up" | "sign-in"
   onSubmit?: (data: AuthFormData) => Promise<void>
+}
+
+function LogoMark({ className }: { className?: string }) {
+  return (
+    <span
+      className={`inline-flex items-center rounded-xl bg-white px-3 py-2 shadow-[0_4px_20px_rgba(0,0,0,0.35)] ring-1 ring-black/[0.06] ${className ?? ""}`}
+    >
+      <Image
+        src="/logo.png"
+        alt="Hireloop"
+        width={154}
+        height={44}
+        priority
+        className="h-7 w-auto"
+      />
+    </span>
+  )
 }
 
 export default function AuthForm({ type, onSubmit }: AuthFormProps) {
@@ -63,7 +82,10 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
       confirmPassword: formData.get("confirmPassword")?.toString(),
       termsAccepted,
       rememberMe,
-      role: formData.get("role")?.toString() as "seeker" | "recruiter",
+      role: formData.get("role")?.toString() as
+        | "seeker"
+        | "recruiter"
+        | "admin",
     }
 
     // Password Validation
@@ -105,35 +127,29 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
           <div className="absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-indigo-600/20 blur-[130px]" />
           <div className="absolute -right-20 -bottom-40 h-[500px] w-[500px] rounded-full bg-violet-600/20 blur-[130px]" />
 
-          <Link href="/" className="relative z-10 flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-600">
-              <Sparkles size={23} />
-            </div>
-
-            <span className="text-2xl font-bold tracking-tight">
-              YourBrand<span className="text-indigo-400">.</span>
-            </span>
+          <Link href="/" className="relative z-10 inline-flex">
+            <LogoMark />
           </Link>
 
           <div className="relative z-10 max-w-xl">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-indigo-400/20 bg-indigo-500/10 px-4 py-2 text-sm text-indigo-300">
               <Sparkles size={15} />
-              Welcome to our platform
+              Welcome to Hireloop
             </div>
 
             <h1 className="text-4xl leading-tight font-bold xl:text-6xl">
               {isSignUp ? (
                 <>
-                  Start your journey.
+                  Create your account.
                   <span className="mt-2 block bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
-                    Build something great.
+                    Find work or hire talent.
                   </span>
                 </>
               ) : (
                 <>
-                  Your workspace.
+                  Welcome back.
                   <span className="mt-2 block bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
-                    Welcome back.
+                    Your next opportunity is waiting.
                   </span>
                 </>
               )}
@@ -141,15 +157,15 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
 
             <p className="mt-6 max-w-md text-base leading-8 text-slate-400">
               {isSignUp
-                ? "Create your account and experience a smarter, simpler way to manage everything in one place."
+                ? "Join Hireloop and discover a smarter way to land your dream job or build your perfect team."
                 : "Sign in to your account and continue your journey with everything right where you left it."}
             </p>
 
             <div className="mt-10 space-y-5">
               {[
-                "Simple and intuitive experience",
+                "Apply to 50,000+ curated jobs",
+                "Hire top talent faster",
                 "Secure and reliable platform",
-                "Everything in one place",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-3">
                   <div className="flex h-7 w-7 items-center justify-center rounded-full bg-indigo-500/15 text-indigo-400">
@@ -162,22 +178,20 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
           </div>
 
           <p className="relative z-10 text-sm text-slate-500">
-            © {new Date().getFullYear()} YourBrand. All rights reserved.
+            © {new Date().getFullYear()} Hireloop. All rights reserved.
           </p>
         </section>
 
         {/* RIGHT AUTH SECTION */}
-        <section className="flex min-h-screen items-center justify-center px-5 py-12 sm:px-8 lg:px-12">
-          <div className="w-full max-w-[440px]">
+        <section className="flex items-center justify-center px-5 py-12 sm:px-8 lg:min-h-screen lg:px-12">
+          <div className="w-full max-w-[480px]">
             {/* Mobile logo */}
             <Link
               href="/"
-              className="mb-10 flex items-center justify-center gap-3 lg:hidden"
+              className="mb-10 flex justify-center lg:hidden"
+              aria-label="Hireloop home"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-                <Sparkles size={21} />
-              </div>
-              <span className="text-xl font-bold">YourBrand.</span>
+              <LogoMark />
             </Link>
 
             {/* Heading */}
@@ -192,7 +206,7 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
 
               <p className="text-sm leading-6 text-muted-foreground">
                 {isSignUp
-                  ? "Enter your information to create your account."
+                  ? "Tell us a bit about yourself to get set up."
                   : "Enter your credentials to access your account."}
               </p>
             </div>
@@ -223,18 +237,121 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
                   {/* Role */}
                   {isSignUp && (
                     <div className="space-y-2">
-                      <Label htmlFor="role">Select your role</Label>
+                      <Label>I am joining as</Label>
 
-                      <select
-                        id="role"
-                        name="role"
-                        defaultValue="seeker"
-                        required
-                        className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
-                      >
-                        <option value="seeker">Job Seeker</option>
-                        <option value="recruiter">Recruiter</option>
-                      </select>
+                      <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+                        {/* Job Seeker */}
+                        <label
+                          htmlFor="role-seeker"
+                          className="group relative flex cursor-pointer flex-col gap-3 rounded-xl border border-border/70 p-4 transition-all duration-200 hover:border-ring/50 hover:bg-muted/40 has-[input:checked]:border-primary/70 has-[input:checked]:bg-primary/[0.06] has-[input:checked]:shadow-[0_0_0_3px_rgba(92,83,254,0.12)] focus-within:ring-2 focus-within:ring-ring/60"
+                        >
+                          <input
+                            type="radio"
+                            id="role-seeker"
+                            name="role"
+                            value="seeker"
+                            defaultChecked
+                            className="sr-only"
+                          />
+
+                          <span className="flex items-center justify-between">
+                            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-muted text-muted-foreground transition-colors group-has-[input:checked]:bg-primary/15 group-has-[input:checked]:text-primary">
+                              <UserRound size={18} />
+                            </span>
+
+                            <span className="flex h-5 w-5 items-center justify-center rounded-full border border-border transition-all duration-200 group-has-[input:checked]:border-primary group-has-[input:checked]:bg-primary">
+                              <Check
+                                size={12}
+                                strokeWidth={3}
+                                className="text-primary-foreground opacity-0 transition-opacity group-has-[input:checked]:opacity-100"
+                              />
+                            </span>
+                          </span>
+
+                          <span className="block">
+                            <span className="block text-sm font-semibold text-foreground">
+                              Job Seeker
+                            </span>
+                            <span className="mt-1 block text-xs leading-5 text-muted-foreground">
+                              Find jobs and apply with your profile
+                            </span>
+                          </span>
+                        </label>
+
+                        {/* Recruiter */}
+                        <label
+                          htmlFor="role-recruiter"
+                          className="group relative flex cursor-pointer flex-col gap-3 rounded-xl border border-border/70 p-4 transition-all duration-200 hover:border-ring/50 hover:bg-muted/40 has-[input:checked]:border-primary/70 has-[input:checked]:bg-primary/[0.06] has-[input:checked]:shadow-[0_0_0_3px_rgba(92,83,254,0.12)] focus-within:ring-2 focus-within:ring-ring/60"
+                        >
+                          <input
+                            type="radio"
+                            id="role-recruiter"
+                            name="role"
+                            value="recruiter"
+                            className="sr-only"
+                          />
+
+                          <span className="flex items-center justify-between">
+                            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-muted text-muted-foreground transition-colors group-has-[input:checked]:bg-primary/15 group-has-[input:checked]:text-primary">
+                              <Building2 size={18} />
+                            </span>
+
+                            <span className="flex h-5 w-5 items-center justify-center rounded-full border border-border transition-all duration-200 group-has-[input:checked]:border-primary group-has-[input:checked]:bg-primary">
+                              <Check
+                                size={12}
+                                strokeWidth={3}
+                                className="text-primary-foreground opacity-0 transition-opacity group-has-[input:checked]:opacity-100"
+                              />
+                            </span>
+                          </span>
+
+                          <span className="block">
+                            <span className="block text-sm font-semibold text-foreground">
+                              Recruiter
+                            </span>
+                            <span className="mt-1 block text-xs leading-5 text-muted-foreground">
+                              Post jobs and hire great talent
+                            </span>
+                          </span>
+                        </label>
+
+                        {/* Admin */}
+                        <label
+                          htmlFor="role-admin"
+                          className="group relative flex cursor-pointer flex-col gap-3 rounded-xl border border-border/70 p-4 transition-all duration-200 hover:border-ring/50 hover:bg-muted/40 has-[input:checked]:border-primary/70 has-[input:checked]:bg-primary/[0.06] has-[input:checked]:shadow-[0_0_0_3px_rgba(92,83,254,0.12)] focus-within:ring-2 focus-within:ring-ring/60"
+                        >
+                          <input
+                            type="radio"
+                            id="role-admin"
+                            name="role"
+                            value="admin"
+                            className="sr-only"
+                          />
+
+                          <span className="flex items-center justify-between">
+                            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-muted text-muted-foreground transition-colors group-has-[input:checked]:bg-primary/15 group-has-[input:checked]:text-primary">
+                              <ShieldCheck size={18} />
+                            </span>
+
+                            <span className="flex h-5 w-5 items-center justify-center rounded-full border border-border transition-all duration-200 group-has-[input:checked]:border-primary group-has-[input:checked]:bg-primary">
+                              <Check
+                                size={12}
+                                strokeWidth={3}
+                                className="text-primary-foreground opacity-0 transition-opacity group-has-[input:checked]:opacity-100"
+                              />
+                            </span>
+                          </span>
+
+                          <span className="block">
+                            <span className="block text-sm font-semibold text-foreground">
+                              Admin
+                            </span>
+                            <span className="mt-1 block text-xs leading-5 text-muted-foreground">
+                              Manage platform and users
+                            </span>
+                          </span>
+                        </label>
+                      </div>
                     </div>
                   )}
 
@@ -399,7 +516,10 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
 
                   {/* Error */}
                   {error && (
-                    <p role="alert" className="text-sm text-destructive">
+                    <p
+                      role="alert"
+                      className="rounded-lg border border-destructive/30 bg-destructive/10 px-3.5 py-2.5 text-sm text-destructive"
+                    >
                       {error}
                     </p>
                   )}
@@ -408,7 +528,7 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="h-11 w-full gap-2 font-semibold"
+                    className="h-11 w-full gap-2 rounded-xl font-semibold"
                   >
                     {isSubmitting
                       ? "Please wait..."
@@ -420,16 +540,7 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
                   </Button>
                 </form>
 
-                <div className="my-6">
-                  <div className="relative">
-                    <Separator />
-                    <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-3 text-xs text-muted-foreground">
-                      OR
-                    </span>
-                  </div>
-                </div>
-
-                <p className="text-center text-sm text-muted-foreground">
+                <p className="mt-6 text-center text-sm text-muted-foreground">
                   {isSignUp
                     ? "Already have an account?"
                     : "Don't have an account?"}
