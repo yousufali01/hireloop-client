@@ -42,18 +42,14 @@ interface AuthFormProps {
 
 function LogoMark({ className }: { className?: string }) {
   return (
-    <span
-      className={`inline-flex items-center rounded-xl bg-white px-3 py-2 shadow-[0_4px_20px_rgba(0,0,0,0.35)] ring-1 ring-black/[0.06] ${className ?? ""}`}
-    >
-      <Image
-        src="/logo.png"
-        alt="Hireloop"
-        width={154}
-        height={44}
-        priority
-        className="h-7 w-auto"
-      />
-    </span>
+    <Image
+      src="/logo.png"
+      alt="Hireloop"
+      width={154}
+      height={44}
+      priority
+      className={`h-7 w-auto ${className ?? ""}`}
+    />
   )
 }
 

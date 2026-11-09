@@ -124,16 +124,14 @@ function Logo({ className }: { className?: string }) {
       aria-label="Hireloop home"
       className={cn("group inline-flex shrink-0 items-center", className)}
     >
-      <span className="flex items-center rounded-xl bg-white px-3 py-2 shadow-[0_4px_18px_rgba(0,0,0,0.35)] ring-1 ring-black/[0.06] transition-shadow duration-200 group-hover:shadow-[0_6px_24px_rgba(0,0,0,0.45)]">
-        <Image
-          src="/logo.png"
-          alt="Hireloop"
-          width={154}
-          height={44}
-          priority
-          className="h-6 w-auto sm:h-7"
-        />
-      </span>
+      <Image
+        src="/logo.png"
+        alt="Hireloop"
+        width={154}
+        height={44}
+        priority
+        className="h-6 w-auto transition-opacity duration-200 group-hover:opacity-80 sm:h-7"
+      />
     </Link>
   )
 }

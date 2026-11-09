@@ -116,7 +116,14 @@ export function DashboardSidebar() {
         {/* Logo */}
         <div className="flex items-center px-2 pt-2">
           <Link href="/">
-            <Image src="/images/logo.png" alt="HireLoop" width={104} height={28} priority />
+            <Image
+              src="/logo.png"
+              alt="HireLoop"
+              width={154}
+              height={44}
+              priority
+              className="h-7 w-auto"
+            />
           </Link>
         </div>
 
