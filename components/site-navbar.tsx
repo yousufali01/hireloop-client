@@ -6,6 +6,7 @@ import Link from "next/link"
 import { useRouter, usePathname } from "next/navigation"
 import {
   ChevronDown,
+  LayoutDashboard,
   LogOut,
   MenuIcon,
   UserRound,
@@ -16,6 +17,7 @@ import { Toast } from "@base-ui/react/toast"
 
 import { cn } from "cn"
 import { authClient } from "@/lib/auth-client"
+import { getDashboardHref } from "@/lib/dashboard"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -29,6 +31,9 @@ const navLinks = [
   { label: "Company", href: "/company" },
   { label: "Pricing", href: "/pricing" },
 ]
+
+// Each role lands on its own dashboard after signing in.
+// Mapping lives in lib/dashboard.ts, shared with the auth flows.
 
 const roleMeta: Record<string, { label: string; avatar: string }> = {
   seeker: {
@@ -178,6 +183,14 @@ function UserMenu({
             <Menu.Separator className="mx-2 h-px bg-white/[0.06]" />
 
             <Menu.LinkItem
+              href={getDashboardHref(role)}
+              className="mt-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[#ededef]/85 outline-none transition-colors hover:bg-white/[0.07] hover:text-white data-[highlighted]:bg-white/[0.07] data-[highlighted]:text-white"
+            >
+              <LayoutDashboard size={16} className="shrink-0 text-white/60" />
+              Dashboard
+            </Menu.LinkItem>
+
+            <Menu.LinkItem
               href="/profile"
               className="mt-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[#ededef]/85 outline-none transition-colors hover:bg-white/[0.07] hover:text-white data-[highlighted]:bg-white/[0.07] data-[highlighted]:text-white"
             >
@@ -250,6 +263,14 @@ export function SiteNavbar() {
             {navLinks.map((link) => (
               <NavLink key={link.label} href={link.href} label={link.label} />
             ))}
+            {/* Role-based Dashboard link (only shows while signed in) */}
+            {user ? (
+              <NavLink
+                href={getDashboardHref(role)}
+                label="Dashboard"
+                className="ml-1"
+              />
+            ) : null}
           </nav>
 
           {/* Desktop actions */}
@@ -375,6 +396,15 @@ export function SiteNavbar() {
                 activeClassName="bg-white/[0.07]"
               />
             ))}
+            {/* Role-based Dashboard link (only shows while signed in) */}
+            {user ? (
+              <NavLink
+                href={getDashboardHref(role)}
+                label="Dashboard"
+                className="rounded-xl px-3 py-2.5 text-base"
+                activeClassName="bg-white/[0.07]"
+              />
+            ) : null}
           </nav>
 
           {/* Account section */}

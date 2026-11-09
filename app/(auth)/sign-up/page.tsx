@@ -5,6 +5,7 @@ import { Toast } from "@base-ui/react/toast"
 
 import AuthForm, { type AuthFormData } from "@/components/auth-form"
 import { authClient } from "@/lib/auth-client"
+import { getDashboardHref } from "@/lib/dashboard"
 
 export default function SignUpPage() {
   const router = useRouter()
@@ -39,7 +40,9 @@ export default function SignUpPage() {
       type: "success",
     })
 
-    router.push("/")
+    // Send each new user to the dashboard that matches the role they signed up with.
+    router.push(getDashboardHref(data.role))
+    router.refresh()
   }
 
   return <AuthForm type="sign-up" onSubmit={handleSignUp} />
