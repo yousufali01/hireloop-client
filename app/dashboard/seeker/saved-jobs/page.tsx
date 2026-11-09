@@ -239,7 +239,7 @@ export default function SavedJobsPage() {
                     ) : (
                       <Button
                         size="sm"
-                        className="h-9 bg-white font-semibold text-black hover:bg-white/90"
+                        className="h-9 bg-primary font-semibold text-primary-foreground hover:bg-[#6c63ff]"
                       >
                         Apply Now
                       </Button>

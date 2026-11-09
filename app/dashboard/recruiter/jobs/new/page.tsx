@@ -16,6 +16,8 @@ import {
 import { Toast } from "@base-ui/react/toast"
 
 import { DashboardTopbar } from "@/app/components/dashboard-topbar"
+
+import { createJob, JobsApiError, type JobFormData } from "@/lib/actions/jobs"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -116,13 +118,13 @@ const inputClasses = cn(
 )
 
 const selectClasses = cn(
-  "h-10 w-full appearance-none rounded-lg border border-input bg-transparent px-3 pr-9 text-sm outline-none transition-colors",
+  "h-10 w-full appearance-none rounded-lg border border-input bg-transparent px-3 pr-9 text-sm transition-colors outline-none",
   "placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
-  "dark:bg-input/30 disabled:cursor-not-allowed disabled:opacity-50 [&>option]:bg-[#1a1a1f] text-white"
+  "text-white disabled:cursor-not-allowed disabled:opacity-50 dark:bg-input/30 [&>option]:bg-[#1a1a1f]"
 )
 
 const textareaClasses = cn(
-  "w-full rounded-lg border border-input bg-transparent px-3 py-2.5 text-sm outline-none transition-colors resize-y min-h-[140px]",
+  "min-h-[140px] w-full resize-y rounded-lg border border-input bg-transparent px-3 py-2.5 text-sm transition-colors outline-none",
   "placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
   "dark:bg-input/30"
 )
@@ -131,8 +133,8 @@ const chevronClasses =
   "pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 text-muted-foreground"
 
 const publishButtonClasses = cn(
-  "h-11 gap-2 rounded-xl bg-emerald-600 px-6 text-base font-semibold text-white shadow-[0_10px_30px_rgba(16,185,129,0.35)]",
-  "transition-all duration-200 hover:bg-emerald-500 hover:shadow-[0_12px_36px_rgba(16,185,129,0.5)]"
+  "h-11 gap-2 rounded-xl bg-primary px-6 text-base font-semibold text-primary-foreground shadow-[0_10px_30px_rgba(92,83,254,0.4)]",
+  "transition-all duration-200 hover:bg-[#6c63ff] hover:shadow-[0_12px_36px_rgba(92,83,254,0.55)]"
 )
 
 /* -------------------------------------------------------------------------- */
@@ -166,20 +168,44 @@ export default function PostJobPage() {
 
   const resetForm = () => setForm(initialFormState)
 
-  const handlePublish = async (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handlePublish = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setIsSubmitting(true)
 
     try {
-      // TODO: wire up to the jobs API once the backend route is available.
+      const payload: JobFormData = {
+        title: form.title.trim(),
+        company: form.company.trim() || "Unknown Company",
+        category: form.category,
+        jobType: form.jobType,
+        remoteAllowed: form.remoteAllowed,
+        location: form.location,
+        deadline: form.deadline,
+        minSalary: form.minSalary,
+        maxSalary: form.maxSalary,
+        salaryFrequency: form.salaryFrequency,
+        responsibilities: form.responsibilities,
+        qualifications: form.qualifications,
+      }
+
+      const savedJob = await createJob(payload)
+
       addToast({
         title: "Job published",
-        description: `Your listing "${form.title}" is now live and visible to candidates.`,
+        description: `"${savedJob.title}" saved to MongoDB and is now live for candidates.`,
         type: "success",
       })
+
       setForm(initialFormState)
+    } catch (error) {
+      addToast({
+        title: "Could not publish job",
+        description:
+          error instanceof JobsApiError
+            ? error.message
+            : "Something went wrong. Please try again.",
+        type: "error",
+      })
     } finally {
       setIsSubmitting(false)
     }
@@ -334,21 +360,23 @@ export default function PostJobPage() {
                     aria-label="Allow remote work"
                     onClick={toggleRemote}
                     className={cn(
-                      "relative flex h-7 w-[52px] shrink-0 cursor-pointer items-center rounded-full p-1 outline-none transition-colors duration-200",
+                      "relative flex h-7 w-[52px] shrink-0 cursor-pointer items-center rounded-full p-1 transition-colors duration-200 outline-none",
                       "focus-visible:ring-3 focus-visible:ring-ring/50",
                       form.remoteAllowed
-                        ? "bg-emerald-600"
+                        ? "bg-primary"
                         : "border border-input bg-muted-foreground/20"
                     )}
                   >
                     <span
                       className={cn(
                         "flex size-5 items-center justify-center rounded-full bg-white shadow transition-transform duration-200",
-                        form.remoteAllowed ? "translate-x-[24px]" : "translate-x-0"
+                        form.remoteAllowed
+                          ? "translate-x-[24px]"
+                          : "translate-x-0"
                       )}
                     >
                       {form.remoteAllowed ? (
-                        <Check className="size-3 text-emerald-600" />
+                        <Check className="size-3 text-primary" />
                       ) : (
                         <X className="size-3 text-muted-foreground" />
                       )}

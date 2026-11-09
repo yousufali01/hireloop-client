@@ -232,7 +232,7 @@ export default function ApplicationsPage() {
                   className={cn(
                     "flex size-8 items-center justify-center rounded-lg text-sm transition-colors",
                     page === 1
-                      ? "bg-white font-medium text-black"
+                      ? "bg-primary font-medium text-primary-foreground"
                       : "bg-secondary text-muted-foreground hover:text-foreground"
                   )}
                 >

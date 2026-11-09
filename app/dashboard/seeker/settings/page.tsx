@@ -112,7 +112,7 @@ export default function SettingsPage() {
               <div className="mt-5 flex items-center gap-3 border-t border-border/50 pt-5">
                 <Button
                   size="lg"
-                  className="bg-white font-semibold text-black hover:bg-white/90"
+                  className="bg-primary font-semibold text-primary-foreground hover:bg-[#6c63ff]"
                 >
                   Update Profile
                 </Button>
@@ -180,7 +180,7 @@ export default function SettingsPage() {
               <div className="mt-6 border-t border-border/50 pt-5">
                 <Button
                   size="lg"
-                  className="bg-white font-semibold text-black hover:bg-white/90"
+                  className="bg-primary font-semibold text-primary-foreground hover:bg-[#6c63ff]"
                 >
                   Save Details
                 </Button>

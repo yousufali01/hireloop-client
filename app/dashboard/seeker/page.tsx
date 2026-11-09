@@ -156,7 +156,7 @@ export default function SeekerDashboardPage() {
       <button
         type="button"
         aria-label="Quick action"
-        className="fixed right-8 bottom-8 z-10 flex size-14 items-center justify-center rounded-full bg-white text-black shadow-lg transition-transform hover:scale-105"
+        className="fixed right-8 bottom-8 z-10 flex size-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-[0_12px_32px_rgba(92,83,254,0.4)] transition-transform hover:scale-105"
       >
         <Plus className="size-6" />
       </button>

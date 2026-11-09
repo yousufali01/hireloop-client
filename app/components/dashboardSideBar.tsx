@@ -56,38 +56,135 @@ export type MenuItem = {
 
 export const menuItemsByRole: Record<DashboardRole, MenuItem[]> = {
   seeker: [
-    { id: "dashboard", name: "Dashboard", url: "/dashboard/seeker", icon: ChartNoAxesGantt },
-    { id: "jobs", name: "Jobs", url: "/dashboard/seeker/jobs", icon: Briefcase },
-    { id: "saved-jobs", name: "Saved Jobs", url: "/dashboard/seeker/saved-jobs", icon: Bookmark },
-    { id: "applications", name: "Applications", url: "/dashboard/seeker/applications", icon: ClipboardList },
-    { id: "billing", name: "Billing", url: "/dashboard/seeker/billing", icon: CreditCard },
-    { id: "settings", name: "Settings", url: "/dashboard/seeker/settings", icon: Settings },
+    {
+      id: "dashboard",
+      name: "Dashboard",
+      url: "/dashboard/seeker",
+      icon: ChartNoAxesGantt,
+    },
+    {
+      id: "jobs",
+      name: "Jobs",
+      url: "/dashboard/seeker/jobs",
+      icon: Briefcase,
+    },
+    {
+      id: "saved-jobs",
+      name: "Saved Jobs",
+      url: "/dashboard/seeker/saved-jobs",
+      icon: Bookmark,
+    },
+    {
+      id: "applications",
+      name: "Applications",
+      url: "/dashboard/seeker/applications",
+      icon: ClipboardList,
+    },
+    {
+      id: "billing",
+      name: "Billing",
+      url: "/dashboard/seeker/billing",
+      icon: CreditCard,
+    },
+    {
+      id: "settings",
+      name: "Settings",
+      url: "/dashboard/seeker/settings",
+      icon: Settings,
+    },
   ],
   recruiter: [
-    { id: "dashboard", name: "Dashboard", url: "/dashboard/recruiter", icon: ChartNoAxesGantt },
-    { id: "jobs", name: "My Jobs", url: "/dashboard/recruiter/jobs", icon: Briefcase },
-    { id: "post-job", name: "Post a Job", url: "/dashboard/recruiter/jobs/new", icon: FileText },
-    { id: "candidates", name: "Candidates", url: "/dashboard/recruiter/candidates", icon: Users },
-    { id: "applications", name: "Applications", url: "/dashboard/recruiter/applications", icon: ClipboardList },
-    { id: "billing", name: "Billing", url: "/dashboard/recruiter/billing", icon: Wallet },
-    { id: "settings", name: "Settings", url: "/dashboard/recruiter/settings", icon: Settings },
+    {
+      id: "dashboard",
+      name: "Dashboard",
+      url: "/dashboard/recruiter",
+      icon: ChartNoAxesGantt,
+    },
+    {
+      id: "jobs",
+      name: "My Jobs",
+      url: "/dashboard/recruiter/jobs",
+      icon: Briefcase,
+    },
+    {
+      id: "post-job",
+      name: "Post a Job",
+      url: "/dashboard/recruiter/jobs/new",
+      icon: FileText,
+    },
+    {
+      id: "candidates",
+      name: "Candidates",
+      url: "/dashboard/recruiter/candidates",
+      icon: Users,
+    },
+    {
+      id: "applications",
+      name: "Applications",
+      url: "/dashboard/recruiter/applications",
+      icon: ClipboardList,
+    },
+    {
+      id: "billing",
+      name: "Billing",
+      url: "/dashboard/recruiter/billing",
+      icon: Wallet,
+    },
+    {
+      id: "settings",
+      name: "Settings",
+      url: "/dashboard/recruiter/settings",
+      icon: Settings,
+    },
   ],
   admin: [
-    { id: "dashboard", name: "Dashboard", url: "/dashboard/admin", icon: ChartNoAxesGantt },
+    {
+      id: "dashboard",
+      name: "Dashboard",
+      url: "/dashboard/admin",
+      icon: ChartNoAxesGantt,
+    },
     { id: "users", name: "Users", url: "/dashboard/admin/users", icon: Users },
-    { id: "companies", name: "Companies", url: "/dashboard/admin/companies", icon: Building2 },
+    {
+      id: "companies",
+      name: "Companies",
+      url: "/dashboard/admin/companies",
+      icon: Building2,
+    },
     { id: "jobs", name: "Jobs", url: "/dashboard/admin/jobs", icon: Briefcase },
-    { id: "reports", name: "Reports", url: "/dashboard/admin/reports", icon: Layers },
-    { id: "settings", name: "Settings", url: "/dashboard/admin/settings", icon: Settings },
+    {
+      id: "reports",
+      name: "Reports",
+      url: "/dashboard/admin/reports",
+      icon: Layers,
+    },
+    {
+      id: "settings",
+      name: "Settings",
+      url: "/dashboard/admin/settings",
+      icon: Settings,
+    },
   ],
 }
 
 const portalConfig: Record<
   DashboardRole,
-  { portal: string; badge: string; cta: { name: string; icon: LucideIcon } | null }
+  {
+    portal: string
+    badge: string
+    cta: { name: string; icon: LucideIcon } | null
+  }
 > = {
-  seeker: { portal: "Seeker Portal", badge: "Professional Tier", cta: { name: "Post Resume", icon: FileText } },
-  recruiter: { portal: "Recruiter Portal", badge: "Business Tier", cta: { name: "Post a Job", icon: FileText } },
+  seeker: {
+    portal: "Seeker Portal",
+    badge: "Professional Tier",
+    cta: { name: "Post Resume", icon: FileText },
+  },
+  recruiter: {
+    portal: "Recruiter Portal",
+    badge: "Business Tier",
+    cta: { name: "Post a Job", icon: FileText },
+  },
   admin: { portal: "Admin Panel", badge: "Super Admin", cta: null },
 }
 
@@ -136,7 +233,9 @@ export function DashboardSidebar() {
             <p className="truncate text-sm font-medium text-sidebar-foreground">
               {session?.user?.name || portal.portal}
             </p>
-            <p className="truncate text-xs text-muted-foreground">{portal.badge}</p>
+            <p className="truncate text-xs text-muted-foreground">
+              {portal.badge}
+            </p>
           </div>
         </div>
       </SidebarHeader>
@@ -168,7 +267,7 @@ export function DashboardSidebar() {
 
       <SidebarFooter className="gap-2 pb-4">
         {portal.cta ? (
-          <Button className="w-full bg-white font-semibold text-black hover:bg-white/90">
+          <Button className="w-full bg-primary font-semibold text-primary-foreground hover:bg-[#6c63ff]">
             <portal.cta.icon />
             {portal.cta.name}
           </Button>

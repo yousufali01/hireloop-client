@@ -77,7 +77,7 @@ export default function BillingPage() {
             </div>
 
             <div className="mt-6 flex items-center gap-3">
-              <Button className="bg-white font-semibold text-black hover:bg-white/90">
+              <Button className="bg-primary font-semibold text-primary-foreground hover:bg-[#6c63ff]">
                 Upgrade Plan
               </Button>
               <Button variant="outline" className="bg-transparent">
