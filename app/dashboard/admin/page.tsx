@@ -45,7 +45,7 @@ export default function AdminDashboardPage() {
     <div className="relative">
       <DashboardTopbar />
 
-      <div className="mx-auto max-w-6xl space-y-8 px-2 pb-16 sm:px-4">
+      <div className="mx-auto max-w-6xl space-y-8 px-2 pt-6 pb-16 sm:px-4">
         {/* Header */}
         <section className="rounded-xl bg-card p-5 ring-1 ring-foreground/10 sm:p-6">
           <div className="flex items-start gap-4">

@@ -57,7 +57,7 @@ export default function SettingsPage() {
     <div className="space-y-6">
       <DashboardTopbar />
 
-      <div className="mx-auto max-w-6xl space-y-6 px-2 pb-16 sm:px-4">
+      <div className="mx-auto max-w-6xl space-y-6 px-2 pt-6 pb-16 sm:px-4">
         {/* Header */}
         <section className="space-y-1">
           <h1 className="text-3xl font-semibold tracking-tight">Settings</h1>

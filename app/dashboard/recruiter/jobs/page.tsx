@@ -396,7 +396,7 @@ export default function ManageJobPostsPage() {
     <div className="relative">
       <DashboardTopbar placeholder="Search your job listings..." />
 
-      <div className="mx-auto max-w-6xl px-2 pb-16 sm:px-4">
+      <div className="mx-auto max-w-6xl px-2 pt-6 pb-16 sm:px-4">
         {/* Header */}
         <section className="flex flex-col gap-4 rounded-xl bg-card p-5 ring-1 ring-foreground/10 sm:flex-row sm:items-center sm:justify-between sm:p-6">
           <div className="min-w-0">

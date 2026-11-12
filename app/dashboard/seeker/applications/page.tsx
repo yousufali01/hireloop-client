@@ -102,7 +102,7 @@ export default function ApplicationsPage() {
     <div>
       <DashboardTopbar placeholder="Search applications..." />
 
-      <div className="mx-auto max-w-6xl space-y-6 px-2 pb-16 sm:px-4">
+      <div className="mx-auto max-w-6xl space-y-6 px-2 pt-6 pb-16 sm:px-4">
         {/* Header */}
         <section className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
           <div className="space-y-1">

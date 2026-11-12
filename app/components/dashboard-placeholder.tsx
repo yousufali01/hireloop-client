@@ -24,7 +24,7 @@ export function DashboardPlaceholder({
     <div className="relative">
       <DashboardTopbar />
 
-      <div className="mx-auto max-w-6xl px-2 pb-16 sm:px-4">
+      <div className="mx-auto max-w-6xl px-2 pt-6 pb-16 sm:px-4">
         <section className="flex min-h-[60vh] flex-col items-center justify-center gap-3 rounded-xl bg-card p-10 text-center ring-1 ring-foreground/10 sm:p-16">
           <div className="flex size-14 items-center justify-center rounded-full bg-secondary">
             <Icon className="size-7 text-muted-foreground" />

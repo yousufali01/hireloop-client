@@ -228,8 +228,11 @@ export function SiteNavbar() {
   const user = session?.user
   const role = user ? ((user as { role?: string }).role ?? "seeker") : "seeker"
 
-  // The Stripe checkout screen is chrome-free, like the hosted payment page.
-  if (pathname === "/checkout") return null
+  // The Stripe checkout screen and the dashboards (which have their own
+  // sidebar/topbar) are chrome-free — the public navbar would be duplicated.
+  if (pathname === "/checkout" || pathname.startsWith("/dashboard")) {
+    return null
+  }
 
   const handleSignOut = async () => {
     await authClient.signOut()

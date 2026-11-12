@@ -40,7 +40,7 @@ export default function SeekerJobsPage() {
     <div className="space-y-6">
       <DashboardTopbar placeholder="Search jobs, companies, or skills..." />
 
-      <div className="mx-auto max-w-6xl space-y-6 px-2 pb-16 sm:px-4">
+      <div className="mx-auto max-w-6xl space-y-6 px-2 pt-6 pb-16 sm:px-4">
         <section className="space-y-1">
           <h1 className="text-3xl font-semibold tracking-tight">Browse Jobs</h1>
           <p className="text-sm text-muted-foreground">

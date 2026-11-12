@@ -215,7 +215,7 @@ export default function PostJobPage() {
     <div className="relative">
       <DashboardTopbar placeholder="Search for jobs, candidates..." />
 
-      <div className="mx-auto max-w-6xl px-2 pb-16 sm:px-4">
+      <div className="mx-auto max-w-6xl px-2 pt-6 pb-16 sm:px-4">
         {/* Create New Listing header */}
         <section className="rounded-xl bg-card p-5 ring-1 ring-foreground/10 sm:p-6">
           <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between md:gap-6">

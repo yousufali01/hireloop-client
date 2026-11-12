@@ -109,7 +109,7 @@ export default function SavedJobsPage() {
         }
       />
 
-      <div className="mx-auto max-w-6xl space-y-6 px-2 pb-16 sm:px-4">
+      <div className="mx-auto max-w-6xl space-y-6 px-2 pt-6 pb-16 sm:px-4">
         {/* Header */}
         <section className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div className="space-y-1">

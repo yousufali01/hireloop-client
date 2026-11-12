@@ -1,8 +1,7 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 
 import {
   BellIcon,
@@ -19,7 +18,6 @@ import { Toast } from "@base-ui/react/toast"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Input } from "@/components/ui/input"
 import { authClient, useSession } from "@/lib/auth-client"
-import { menuItemsByRole, type DashboardRole } from "@/app/components/dashboardSideBar"
 import { getDashboardHref } from "@/lib/dashboard"
 import { cn } from "@/lib/utils"
 
@@ -79,7 +77,7 @@ function UserMenu() {
     <Menu.Root>
       <Menu.Trigger
         aria-label="Open account menu"
-        className="flex items-center gap-2 rounded-xl border border-border bg-card py-[5px] pr-2.5 pl-1.5 transition-colors duration-200 outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring/60"
+        className="flex items-center gap-2 rounded-xl border border-border bg-card py-[5px] pr-2 pl-1.5 transition-colors duration-200 outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring/60 sm:pr-2.5"
       >
         <Avatar name={user?.name} className="size-9" textClassName="text-xs" />
         <span className="hidden min-w-0 flex-col items-start leading-tight sm:flex">
@@ -90,7 +88,7 @@ function UserMenu() {
             {user?.name ?? "Member"}
           </span>
         </span>
-        <ChevronDown size={15} className="shrink-0 text-muted-foreground" />
+        <ChevronDown size={15} className="hidden shrink-0 text-muted-foreground sm:block" />
       </Menu.Trigger>
 
       <Menu.Portal>
@@ -138,43 +136,13 @@ function UserMenu() {
   )
 }
 
-/* -------------------------------- breadcrumb ------------------------------ */
-
-function DashboardBreadcrumb() {
-  const pathname = usePathname()
-  const { data: session, isPending } = useSession()
-
-  const sessionRole = (session?.user as { role?: string } | undefined)?.role
-  const role: DashboardRole =
-    sessionRole && menuItemsByRole[sessionRole as DashboardRole]
-      ? (sessionRole as DashboardRole)
-      : "seeker"
-
-  const items = menuItemsByRole[role]
-  const portalName = role === "admin" ? "Admin Panel" : `${role.charAt(0).toUpperCase()}${role.slice(1)} Portal`
-
-  const current = !isPending
-    ? items.find((item) => pathname === item.url || pathname.startsWith(`${item.url}/`)) ??
-      items.find((item) => item.id === "dashboard")
-    : null
-
-  return (
-    <nav aria-label="Dashboard navigation" className="hidden min-w-0 items-center gap-2 text-sm md:flex">
-      {current ? (
-        <>
-          <span className="truncate text-muted-foreground">{portalName}</span>
-          <span className="text-muted-foreground/50">/</span>
-          <span className="truncate font-medium text-foreground">{current.name}</span>
-        </>
-      ) : (
-        <span className="font-medium text-foreground">Dashboard</span>
-      )}
-    </nav>
-  )
-}
-
 /* ------------------------------- topbar ----------------------------------- */
 
+/**
+ * Dashboard topbar. Occupies the spot the public navbar used to hold:
+ * sidebar toggle + search on the left, messages/notifications and the
+ * account menu on the right — on every screen size.
+ */
 export function DashboardTopbar({
   placeholder = "Search for opportunities...",
   actions,
@@ -183,21 +151,20 @@ export function DashboardTopbar({
   return (
     <header
       className={cn(
-        "sticky top-16 z-40 flex items-center gap-3 border-b border-border bg-background/80 px-2 py-3 backdrop-blur-md sm:px-4",
+        "sticky top-0 z-40 flex items-center gap-2 border-b border-border bg-background/80 px-2 py-3 backdrop-blur-md sm:gap-3 sm:px-4",
         className
       )}
     >
-      {/* Sidebar navigation — works on every screen size now */}
-      <SidebarTrigger aria-label="Toggle dashboard navigation" />
+      {/* Sidebar navigation — works on every screen size */}
+      <SidebarTrigger aria-label="Toggle dashboard navigation" className="shrink-0" />
 
-      <DashboardBreadcrumb />
-
-      <div className="relative hidden w-full max-w-sm sm:block">
+      {/* Search — always visible, grows to fill available space */}
+      <div className="relative min-w-0 flex-1 sm:max-w-sm">
         <SearchIcon className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-        <Input placeholder={placeholder} className="h-9 rounded-lg pl-9" />
+        <Input placeholder={placeholder} className="h-9 rounded-lg pr-3 pl-9" />
       </div>
 
-      <div className="ml-auto flex items-center gap-1">
+      <div className="ml-auto flex shrink-0 items-center gap-0.5 sm:gap-1">
         {actions}
 
         <button
@@ -216,7 +183,7 @@ export function DashboardTopbar({
           <BellIcon className="size-5" />
           <span className="absolute top-1.5 right-1.5 size-2 rounded-full bg-emerald-500" />
         </button>
-        <div className="ml-1">
+        <div className="ml-0.5 sm:ml-1">
           <UserMenu />
         </div>
       </div>
