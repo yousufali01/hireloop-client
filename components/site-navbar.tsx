@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/sheet"
 
 const navLinks = [
-  { label: "Browse Jobs", href: "/browse" },
+  { label: "Browse Jobs", href: "/browse-jobs" },
   { label: "Company", href: "/company" },
   { label: "Pricing", href: "/pricing" },
 ]
@@ -212,13 +212,11 @@ function UserMenu({
 
 export function SiteNavbar() {
   const router = useRouter()
+  const pathname = usePathname()
   const [open, setOpen] = React.useState(false)
   const [scrolled, setScrolled] = React.useState(false)
   const { data: session, isPending } = authClient.useSession()
   const { add: addToast } = Toast.useToastManager()
-
-  const user = session?.user
-  const role = user ? ((user as { role?: string }).role ?? "seeker") : "seeker"
 
   React.useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 12)
@@ -226,6 +224,12 @@ export function SiteNavbar() {
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  const user = session?.user
+  const role = user ? ((user as { role?: string }).role ?? "seeker") : "seeker"
+
+  // The Stripe checkout screen is chrome-free, like the hosted payment page.
+  if (pathname === "/checkout") return null
 
   const handleSignOut = async () => {
     await authClient.signOut()

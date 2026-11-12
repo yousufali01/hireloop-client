@@ -1,14 +1,16 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { Suspense } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Toast } from "@base-ui/react/toast"
 
 import AuthForm, { type AuthFormData } from "@/components/auth-form"
 import { authClient } from "@/lib/auth-client"
 import { getDashboardHref } from "@/lib/dashboard"
 
-export default function SignInPage() {
+function SignInForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const toastManager = Toast.useToastManager()
 
   const handleSignIn = async (data: AuthFormData) => {
@@ -35,11 +37,26 @@ export default function SignInPage() {
       type: "success",
     })
 
-    // Send each user to the dashboard that matches their role.
+    // Return the user to the page they came from (e.g. a job listing),
+    // otherwise to the dashboard that matches their role.
+    const redirectTo = searchParams.get("redirect")
     const role = (response?.user as { role?: string } | undefined)?.role
-    router.push(getDashboardHref(role))
+
+    if (redirectTo && redirectTo.startsWith("/") && !redirectTo.startsWith("//")) {
+      router.push(redirectTo)
+    } else {
+      router.push(getDashboardHref(role))
+    }
     router.refresh()
   }
 
   return <AuthForm type="sign-in" onSubmit={handleSignIn} />
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={null}>
+      <SignInForm />
+    </Suspense>
+  )
 }
